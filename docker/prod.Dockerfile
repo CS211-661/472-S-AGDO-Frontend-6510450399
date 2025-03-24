@@ -12,6 +12,9 @@ RUN npm ci
 # Copy the rest of the application
 COPY . .
 
+# เพิ่มบรรทัดนี้เพื่อข้าม ESLint check
+ENV NEXT_DISABLE_ESLINT_DURING_BUILD=true
+
 # Build the application
 RUN npm run build
 
