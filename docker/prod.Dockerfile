@@ -6,8 +6,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install dependencies (ใช้ npm install แทน npm ci)
+RUN npm install
 
 # Copy the rest of the application
 COPY . .
@@ -30,7 +30,7 @@ ENV NODE_ENV=production
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --production
+RUN npm install --production
 
 # Copy built application from the builder stage
 COPY --from=builder /app/.next ./.next
