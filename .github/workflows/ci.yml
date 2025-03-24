@@ -81,12 +81,14 @@ jobs:
         with:
           context: .
           file: ./docker/prod.Dockerfile
-          push: ${{ github.ref == 'refs/heads/main' }}
-          tags: ${{ secrets.DOCKER_USERNAME }}/nextjs-app:${{ steps.docker_tag.outputs.tag }}
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/_agdo_frontend:${{ steps.docker_tag.outputs.tag }}
+            ${{ secrets.DOCKER_USERNAME }}/_agdo_frontend:latest
 
       - name: Tag and push latest
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           docker buildx build --push \
-            --tag ${{ secrets.DOCKER_USERNAME }}/nextjs-app:latest \
+            --tag ${{ secrets.DOCKER_USERNAME }}/_agdo_frontend:latest \
             --file ./docker/prod.Dockerfile .
