@@ -6,8 +6,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies (ใช้ npm install แทน npm ci)
-RUN npm install
+# Install dependencies
+RUN npm ci
 
 # Copy the rest of the application
 COPY . .
@@ -17,6 +17,9 @@ RUN echo "module.exports = { eslint: { ignoreDuringBuilds: true }, typescript: {
 
 # Build the application
 RUN npm run build
+
+# ลบไฟล์ที่ไม่จำเป็นหลัง build
+RUN rm -rf node_modules
 
 # Stage 2: Running the application
 FROM node:20-alpine AS runner
@@ -30,11 +33,10 @@ ENV NODE_ENV=production
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm install --production
+RUN npm ci --production
 
 # Copy built application from the builder stage
 COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.js ./next.config.js
 
 # Add user to run the application without root privileges
