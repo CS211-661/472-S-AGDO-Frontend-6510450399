@@ -12,7 +12,7 @@ RUN npm ci
 # Copy the rest of the application
 COPY . .
 
-# ข้าม ESLint ด้วยการแก้ไข next.config.js ก่อนการ build
+# ข้าม ESLint และ TypeScript Errors
 RUN echo "module.exports = { eslint: { ignoreDuringBuilds: true }, typescript: { ignoreBuildErrors: true } };" > next.config.js
 
 # Build the application

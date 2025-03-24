@@ -12,11 +12,5 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      # เพิ่มตัวแปรสภาพแวดล้อมอื่นๆ ตามต้องการ
-      # - DATABASE_URL=
-      # - API_KEY=
     volumes:
       - ./logs:/app/logs
-    # หากมีการใช้งานฐานข้อมูลหรือ service อื่นๆ สามารถเพิ่ม depends_on ได้
-    # depends_on:
-    #   - database
